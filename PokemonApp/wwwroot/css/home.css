@@ -310,7 +310,7 @@
 .cloud9 img {
     margin-left: -200px;
     width: 150%;
-    top: 1900px;
+    top: -760px;
     position: absolute;
 }
 
@@ -318,7 +318,7 @@
     color: rebeccapurple;
     margin-left: 40%;
     margin-right: 35%;
-    margin-top: 300px;
+    margin-top: 250px;
     position: absolute;
     font-size: 70px;
     z-index: 6;
@@ -329,10 +329,10 @@
     height: 200vh;
 }
 
-    .battleZone img {
-        width: 200px;
-        margin-left: 70%;
-    }
+.battleZone img {
+    width: 200px;
+    margin-left: 70%;
+}
 
 
 
