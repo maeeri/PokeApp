@@ -17,8 +17,12 @@ namespace PokemonApp.Models
             var pokemonCards = JsonSerializer.Deserialize<PokemonCards>(json);
             var separateCards = pokemonCards.data.ToList();
 
+            Console.WriteLine(pokemonCards);
+
             return separateCards;
         }
+
+
 
         //find cards by rarity(Amazing Rare/Classic Collection/Common/LEGEND/Promo/Radiant Rare/Rare/Rare ACE/
         //Rare BREAK/Rare Holo/Rare Holo EX/Rare Holo GX/Rare Holo LV.X/Rare Holo Star/Rare Holo V/Rare Holo VMAX/,
@@ -38,5 +42,7 @@ namespace PokemonApp.Models
             var theseCards = allCards.Where(x => x.name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             return theseCards;
         }
+
+        
     }
 }

@@ -1,12 +1,16 @@
 ﻿
 @{
+
     ViewData["Title"] = "MarketPlace";
     Random rnd = new Random();
     var pokemons = CardMethods.GetPokemonCards();
     var randomi = pokemons.OrderBy(x => rnd.Next()).Take(1);
 
     var randomSlider = pokemons.OrderBy(x => rnd.Next()).Take(2);
+
+
 }
+
 
 <link rel="stylesheet" href="~/css/market.css" /><link rel="stylesheet" href="~/css/modal-style.css" />
 
