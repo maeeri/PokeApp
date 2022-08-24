@@ -23,10 +23,10 @@
     overflow: hidden;
 }
 
-    .hide span {
-        transform: translateY(100%);
-        display: inline-block;
-    }
+.hide span {
+    transform: translateY(100%);
+    display: inline-block;
+}
 
 .slider {
     position: fixed;
@@ -111,9 +111,9 @@
     margin-bottom: 100px;
 }
 
-    .orange img {
-        bottom: 80px;
-    }
+.orange img {
+    bottom: 80px;
+}
 
 .green {
     background-color: mediumseagreen;
@@ -122,10 +122,10 @@
     margin-bottom: 100px;
 }
 
-    .green img {
-        bottom: 80px;
-        right: -50%;
-    }
+.green img {
+    bottom: 80px;
+    right: -50%;
+}
 
 .blue {
     background-color: dodgerblue;
@@ -134,9 +134,9 @@
     margin-bottom: 100px;
 }
 
-    .blue img {
-        bottom: 80px;
-    }
+.blue img {
+    bottom: 80px;
+}
 
 .info img {
     width: 16em;
@@ -146,19 +146,19 @@
     grid-template-areas: "left right";
 }
 
-    .info.right img {
-        grid-area: right;
-    }
+.info.right img {
+    grid-area: right;
+}
 
 .content.or {
     background-color: white;
     height: 180px;
     padding: 20px;
-    margin-bottom: 20px;
-    position: absolute;
-    right: 15%;
+    
+    float: right;
+    margin-right: 15%;
     width: 500px;
-    top: 123%;
+
 }
 
 .content.gr {
