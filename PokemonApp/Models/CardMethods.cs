@@ -17,6 +17,8 @@ namespace PokemonApp.Models
             var pokemonCards = JsonSerializer.Deserialize<PokemonCards>(json);
             var separateCards = pokemonCards.data.ToList();
 
+
+
             Console.WriteLine(pokemonCards);
 
             return separateCards;
@@ -30,6 +32,7 @@ namespace PokemonApp.Models
         public static List<Datum> GetCardsByRarity(string rarity)
         {
             var card = GetPokemonCards();
+            
             var theseCards2 = card.Where(x => x.rarity != null).ToList();
             var valivaihe = theseCards2.Where(x => x.rarity.Equals(rarity, StringComparison.OrdinalIgnoreCase));
             var theseCards = valivaihe.ToList();
