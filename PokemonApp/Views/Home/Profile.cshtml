@@ -1,13 +1,19 @@
-@{
+@using System.Security.Claims;
+@using System.Security.Principal;
+@using PokemonApp.Controllers;
+@{ 
+
     ViewData["Title"] = "MarketPlace";
     Random rnd = new Random();
     var pokemons = CardMethods.GetPokemonCards();
     var randomi = pokemons.OrderBy(x => rnd.Next()).Take(1);
+    PokemonDBContext tyyppi = new PokemonDBContext();
+
+
 
 }
 ﻿
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -63,29 +69,46 @@
     </div>
     <script src="~/js/korttiliike.js"></script>
 
-    <div>
-        @using PokemonApp.Controllers;
+    <div class="omistuskortit">
+
         @{
-            var kristian = new PokemonCard();
-            var username = User.Identity.Name;
 
-            var findUser = DbController.GetUser(username);
+            var keijo = DbController.GetUser(User.Identity.Name);
+            var pokke = keijo.PokemonCards.ToList();
 
-            if (findUser != null)
+            /*foreach (var i in pokke)
             {
-                foreach (var card in randomi)
-                {
-                    findUser.PokemonCards.ToList();
-                }
+                var uusikeijo = from x in pokemons where x.id == i.PokemonId select x.images.small;
+                <img src=@uusikeijo class="fill" draggable="true" width="150" height="185" />
+
+            }/*
+       //var vertaaId = keijo.PokemonCards.Select(x => x.PokemonId);
+        var simo69 = from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId;
+        /*if (simo69 != null)
+        {
+            foreach (var i in pokemons.Where(x => x.id == simo69.ToString()))
+            {
+                    <img src=@i.images.small class="fill" draggable="true" width="150" height="185" />
+                    }
+                }*/
+
+            var simo69 = from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId;
+            foreach (var i in simo69)
+            {
+                <img src=@i class="fill" draggable="true" width="150" height="185" />
+
             }
 
 
-            var claims = User.Identity.Name;
 
-            var keihas = (from x in kristian.Name where x.ToString() == User.Identity.Name select x).ToList();
+
 
         }
+        
+
+
     </div>
+
 
 
 </body>
