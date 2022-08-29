@@ -24,7 +24,7 @@
         <div class="kortti">
             @foreach (var card in randomi)
             {
-                <img src=@card.images.small class="fill" draggable="true" width="150" height="185" /> 
+                <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
 
         </div>
@@ -62,5 +62,30 @@
         </div>
     </div>
     <script src="~/js/korttiliike.js"></script>
+
+    <div>
+        @using PokemonApp.Controllers;
+        @{
+            var kristian = new PokemonCard();
+            var username = User.Identity.Name;
+
+            var findUser = DbController.GetUser(username);
+
+            if (findUser != null)
+            {
+                foreach (var card in randomi)
+                {
+                    findUser.PokemonCards.ToList();
+                }
+            }
+
+
+            var claims = User.Identity.Name;
+
+            var keihas = (from x in kristian.Name where x.ToString() == User.Identity.Name select x).ToList();
+
+        }
+    </div>
+
 
 </body>
