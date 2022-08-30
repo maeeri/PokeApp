@@ -1,19 +1,17 @@
 ﻿@using PokemonApp.Controllers
 @model ViewModel
 @{
+
     ViewData["Title"] = "MarketPlace";
     Random rnd = new Random();
     var pokemons = CardMethods.GetPokemonCards();
     var randomi = pokemons.OrderBy(x => rnd.Next()).Take(1);
 
     var randomSlider = pokemons.OrderBy(x => rnd.Next()).Take(2);
-    var randomRare = CardMethods.RarePack();
-    var raRe = randomRare.OrderBy(x => rnd.Next()).Take(1);
-    var randomLegendary = CardMethods.LegendaryPack();
-    
-    var legendary = randomLegendary.OrderBy(x => rnd.Next()).Take(1);
-    string blah = "this is a blah string";
+
+
 }
+
 
 <link rel="stylesheet" href="~/css/market.css" /><link rel="stylesheet" href="~/css/modal-style.css" />
 
@@ -116,8 +114,8 @@
                 </div>
 
                 <div>
-                    <button onclick="RareCardShow(this)" data-modal-target="#modal" class="startpoint rarePakka pack4" id="raffleButton">
-                        <img src="~/Images/OrangeBall.png" class="pinkki" />
+                    <button onclick="RareCardShow(this)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
+                        <img src="~/Images/BlackBall.png" class="pinkki" />
                     </button>
                 </div>
 
