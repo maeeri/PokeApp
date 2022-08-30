@@ -85,7 +85,6 @@ namespace PokemonApp.Controllers
             viewModel.User.Cash = viewModel.User.Cash + amount;
             _context.Update(viewModel.User);
             _context.SaveChanges();
-
         }
         //Remove cash by treating yourself to a pack
         public static void UseCash(ViewModel viewModel, int amount)

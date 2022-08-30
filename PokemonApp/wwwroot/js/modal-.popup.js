@@ -111,4 +111,8 @@ function HideRareCard() {
     })
 }
 
+document.getElementById('jerenonnistuminen').onclick = function() {
+    document.write('button onclick="HideRareCard()" data-modal-target="#modal" class="startpoint" id="raffleButton"');
+    document.write('<img src="~/Images/OrangeBall.png" class="liila" />"</button>');
+}
 
