@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/profiili.css" />
     <script src="~/js/Navbar.js" defer></script>
+    <script src="~/js/Profiili.js" defer></script>
 </head>
 <body>
     <h1>Profile</h1>
@@ -72,43 +73,55 @@
     <div class="omistuskortit">
 
         @{
-
             var keijo = DbController.GetUser(User.Identity.Name);
-            var pokke = keijo.PokemonCards.ToList();
-
-            /*foreach (var i in pokke)
-            {
-                var uusikeijo = from x in pokemons where x.id == i.PokemonId select x.images.small;
-                <img src=@uusikeijo class="fill" draggable="true" width="150" height="185" />
-
-            }/*
-       //var vertaaId = keijo.PokemonCards.Select(x => x.PokemonId);
-        var simo69 = from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId;
-        /*if (simo69 != null)
-        {
-            foreach (var i in pokemons.Where(x => x.id == simo69.ToString()))
-            {
-                    <img src=@i.images.small class="fill" draggable="true" width="150" height="185" />
-                    }
-                }*/
-
-            var simo69 = from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId;
+            //var pokke = keijo.PokemonCards;
+            var simo69 = (from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId).ToList();
+            List<Datum> miika = new List<Datum>();
             foreach (var i in simo69)
             {
-                <img src=@i class="fill" draggable="true" width="150" height="185" />
+                miika.Add(pokemons.Where(x => x.id == i).FirstOrDefault());
+            }
+
+            foreach (var o in miika) //JSON POKEMONKORTIT
+            {
+                string url = o.images.small;
+                <img src=@url class="fill" draggable="true" width="150" height="185" />
 
             }
+
+
+
+        }
 
 
 
 
 
         }
-        
+
 
 
     </div>
+    @{
+        var user = DbController.GetUser(User.Identity.Name);
 
+        var userXp = user.Xp;
+
+        PokemonDBContext simppa = new PokemonDBContext();
+
+        //var testiTallennus = userXp + 60;
+        simppa.Update(userXp + 60);
+        
+    }
+
+    <div class="progress">
+        <div class="progress-done" data-done=@userXp>
+            <span class="progress-text"></span>
+        </div>
+    </div>
+
+    <button class="progress-btn" onclick="ProgressBar(@userXp + 10)">Press</button>
+    <button class="progress-btn2" onclick="ProgressBar2(@userXp + 30)">Press</button>
 
 
 </body>
