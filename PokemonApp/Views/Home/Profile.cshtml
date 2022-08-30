@@ -1,14 +1,14 @@
 @using System.Security.Claims;
 @using System.Security.Principal;
 @using PokemonApp.Controllers;
+@model ViewModel;
 @{ 
 
     ViewData["Title"] = "MarketPlace";
     Random rnd = new Random();
     var pokemons = CardMethods.GetPokemonCards();
-    var randomi = pokemons.OrderBy(x => rnd.Next()).Take(1);
-    PokemonDBContext tyyppi = new PokemonDBContext();
-
+    var random = pokemons.OrderBy(x => rnd.Next()).Take(1);
+    PokemonDBContext userDB = new PokemonDBContext();
 
 
 }
@@ -24,12 +24,14 @@
     <script src="~/js/Navbar.js" defer></script>
     <script src="~/js/Profiili.js" defer></script>
 </head>
+
 <body>
+
     <h1>Profile</h1>
 
     <div class="taistelu">
         <div class="kortti">
-            @foreach (var card in randomi)
+            @foreach (var card in random)
             {
                 <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
@@ -37,7 +39,7 @@
         </div>
 
         <div class="kortti">
-            @foreach (var card in randomi)
+            @foreach (var card in random)
             {
                 <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
@@ -45,7 +47,7 @@
         </div>
 
         <div class="kortti">
-            @foreach (var card in randomi)
+            @foreach (var card in random)
             {
                 <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
@@ -53,7 +55,7 @@
         </div>
 
         <div class="kortti">
-            @foreach (var card in randomi)
+            @foreach (var card in random)
             {
                 <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
@@ -61,67 +63,76 @@
         </div>
 
         <div class="kortti">
-            @foreach (var card in randomi)
+            @foreach (var card in random)
             {
                 <img src=@card.images.small class="fill" draggable="true" width="150" height="185" />
             }
 
         </div>
-    </div>
-    <script src="~/js/korttiliike.js"></script>
 
-    <div class="omistuskortit">
 
         @{
-            var keijo = DbController.GetUser(User.Identity.Name);
+            var getUser = DbController.GetUser(User.Identity.Name);
             //var pokke = keijo.PokemonCards;
-            var simo69 = (from x in tyyppi.PokemonCards where x.User == keijo.Id select x.PokemonId).ToList();
-            List<Datum> miika = new List<Datum>();
-            foreach (var i in simo69)
+            var pokemonIDs = (from x in userDB.PokemonCards where x.User == getUser.Id select x.PokemonId).ToList();
+            List<Datum> pokemonList = new List<Datum>();
+            foreach(var i in pokemonIDs)
             {
-                miika.Add(pokemons.Where(x => x.id == i).FirstOrDefault());
+                pokemonList.Add(pokemons.Where(x => x.id == i).FirstOrDefault());
             }
 
-            foreach (var o in miika) //JSON POKEMONKORTIT
+            foreach (var o in pokemonList) //JSON POKEMONKORTIT 
             {
-                string url = o.images.small;
-                <img src=@url class="fill" draggable="true" width="150" height="185" />
-
+                    string url = o.images.small;
+                        <img src=@url class="fill" draggable="true" width="150" height="185" />
+                
             }
-
-
-
+  
         }
-
-
-
-
-
-        }
-
 
 
     </div>
-    @{
-        var user = DbController.GetUser(User.Identity.Name);
+<h1>Friends</h1>
+<div>
+    <form asp-controller="Home" asp-action="Profile" asp-route-viewModel="@Model">
 
-        var userXp = user.Xp;
-
-        PokemonDBContext simppa = new PokemonDBContext();
-
-        //var testiTallennus = userXp + 60;
-        simppa.Users.Update(user.Xp + 60);
-        
+        <input type="text" name="searchString" asp-route-searchString="searchString" />
+        <input type="submit" value="Add friend" />
+    </form>
+    @if (@Model.Users != null)
+    {
+        foreach (var item in @Model.Users)
+        {
+            <p>@item.Username <a asp-controller="Db" asp-action="FollowFriend" asp-route-userId="@Model.User.Id" asp-route-followId="@item.Id" >
+                <span title="follow friend">
+                    <i class="fa-solid fa-plus" aria-label="follow friend"></i>
+                </span>
+            </a></p>
+        }
     }
+    
+    <p>Your friends:</p>
+    @{
+        var connections = Model.Connections;
+        foreach (var item in connections)
+        {
+        
+            <p>@DbController.GetUserById(item.OtherUser).Username @DbController.GetUserById(item.OtherUser).Cash @DbController.GetUserById(item.OtherUser).Xp 
+                <a asp-controller="Db" asp-action="StopFollowing" asp-route-id="@item.Id">stop following</a></p>
+        }
+}
+    @*<button type="button"  onclick="FriendSearch()"> Search for friends</button>
+        <table>
+            <tr>
+                <td>
 
-    <div class="progress">
-        <div class="progress-done" data-done=@userXp>
-            <span class="progress-text"></span>
-        </div>
-    </div>
+                    <p id="Friendsearch">
+                    </p>
 
-    <button class="progress-btn" onclick="ProgressBar(@userXp + 10)">Press</button>
-    <button class="progress-btn2" onclick="ProgressBar2(@userXp + 30)">Press</button>
-
-
+                </td>
+            </tr>
+        </table>*@
+</div>
+<script src="~/js/korttiliike.js"></script>
+<script src="~/js/FriendSearch.js"></script>
 </body>
