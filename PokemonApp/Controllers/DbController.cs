@@ -45,13 +45,6 @@ namespace PokemonApp.Controllers
             return RedirectToAction("Marketplace", "Home", viewModel);
         }
 
-        //Save Xp
-
-        //public IActionResult XpSave(ViewModel viewModel)
-        //{
-        //    viewModel.User = GetUser(User.Identity.Name);
-            
-        //}
     }
 
 }
