@@ -118,6 +118,12 @@ function ButtonEvent(card, value, price) {
     RareCardShow(card, price);
 }
 
+function SetTime(time) {
+    document.getElementById("set-time").value = time;
+    console.log(time);
+    ¨console.log("settime")
+}
+
 function HideRareCard() {
 
     document.getElementById("rareCard").style.display = "none";
