@@ -17,11 +17,9 @@ namespace PokemonApp.Models
             string json2 = File.ReadAllText("./wwwroot/js/pokemon2.json");
             var pokemonCards = JsonSerializer.Deserialize<PokemonCards>(json);
             var pokemonCards2 = JsonSerializer.Deserialize<PokemonCards>(json2);
-<<<<<<< HEAD
+
             var separateCards = pokemonCards.data.ToList();
-=======
-            var separateCards = pokemonCards.data.ToList() ;
->>>>>>> 5188ed7e28e0d4286d2438810d3c0be0866945a8
+
             var sepa = pokemonCards2.data.ToList();
             var result = separateCards.Concat(sepa);
             return result.ToList();
