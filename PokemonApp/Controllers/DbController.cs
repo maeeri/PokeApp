@@ -59,9 +59,30 @@ namespace PokemonApp.Controllers
             var con = _context.Connections.FirstOrDefault(x => x.Id == id);
             _context.Connections.Remove(con);
             _context.SaveChanges();
+            Response.Redirect("/Home/Profile");
         }
+
+        //buy pack of cards
+        public void BuyPack(ViewModel viewModel, int? pack)
+        {
+            switch (pack)
+            {
+                case 1:
+                    UseCash(viewModel, 10);
+                    break;
+                case 2:
+                    UseCash(viewModel, 20);
+                    break;
+                case 3:
+                    UseCash(viewModel, 30);
+                    break;
+                default:
+                    return;
+            }
+        }
+
         //saves cards to database and updates timer for free pack
-        public IActionResult DbSave(ViewModel viewModel, int pack)
+        public IActionResult DbSave(ViewModel viewModel, int? pack)
         {
             viewModel.User = GetUser(User.Identity.Name);
             
@@ -69,6 +90,7 @@ namespace PokemonApp.Controllers
             {
                 card.User = viewModel.User.Id;
             }
+
             var viimeisin = viewModel.User.Freeclick.GetValueOrDefault();
             if (viimeisin.AddDays(1) < DateTime.Now || viimeisin == null)
             {
@@ -77,28 +99,15 @@ namespace PokemonApp.Controllers
 
             }
 
-            if (pack == 1)
-            {
-                UseCash(viewModel, 10);
-            }
-            else if (pack == 2)
-            {
-                UseCash(viewModel, 20);
-            }
-            else if (pack == 3)
-            {
-                UseCash(viewModel, 30);
-            }
-            else
-            {
-                UseCash(viewModel, 0);
-            }
+            if (pack != null)
+                BuyPack(viewModel, pack);
 
             _context.PokemonCards.AddRange(viewModel.PCards);
             _context.SaveChanges();
 
             return RedirectToAction("Marketplace", "Home", viewModel);
         }
+
         //Add cash to user profile to be used in purchasing packs
         public void AddCash(ViewModel viewModel, int amount)
         {
@@ -109,6 +118,7 @@ namespace PokemonApp.Controllers
             _context.Update(viewModel.User);
             _context.SaveChanges();
         }
+
         //Remove cash by treating yourself to a pack
         public void UseCash(ViewModel viewModel, int amount)
         {
@@ -131,7 +141,16 @@ namespace PokemonApp.Controllers
             }
 
         }
-        
+
+        //Add XP to user
+        public static void AddXp(ViewModel viewModel, int amount)
+        {
+            viewModel.User.Xp = viewModel.User.Xp + amount;
+            _context.Update(viewModel.User);
+            _context.SaveChanges();
+
+        }
+
         //Finds a list of users and takes a search string as parameter
         public static List<User> SearchFriend(string searchString)
         {
@@ -163,14 +182,7 @@ namespace PokemonApp.Controllers
                 _context.Add(viewModel.Connection);
                 _context.SaveChanges();
             }
-            
-        }
-
-         
-        public static string Test()
-        {
-            JavaScriptTestEncoder js = new JavaScriptTestEncoder();
-            return js.Encode("Test");
+            Response.Redirect("/Home/Profile");
         }
     }
 
