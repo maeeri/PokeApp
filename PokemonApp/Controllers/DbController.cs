@@ -184,6 +184,18 @@ namespace PokemonApp.Controllers
             }
             Response.Redirect("/Home/Profile");
         }
+
+        public static void DisplayTimeRemaining(ViewModel viewModel)
+        {
+            DateTime countFrom = viewModel.User.Freeclick.GetValueOrDefault();
+
+            var lopputulos = DateTime.Now.AddDays(1) - DateTime.Now.AddHours(1);
+
+            string answer = string.Format("{0:D2}h:{1:D2}m", lopputulos.Hours,
+                lopputulos.Minutes);
+
+            Console.WriteLine(answer);
+        }
     }
 
 }

@@ -21,22 +21,22 @@ const rarePack = document.getElementById("#rareCard");
 
 
 
-    openModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const modal = document.querySelector(button.dataset.modalTarget)
-            openModal(modal)
-            gsap.from("#card1", { x: -10000 });
-            gsap.from("#card2", { x: -10000, delay: 0.5 });
-            gsap.from("#card3", { x: -10000, delay: 1 });
-            gsap.from("#card4", { x: -10000, delay: 1.5 });
-            gsap.from("#rareCard", { x: -10000, delay: 2 });
-            gsap.from("#card5", { x: -10000, delay: 2 });
+openModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = document.querySelector(button.dataset.modalTarget)
+        openModal(modal)
+        gsap.from("#card1", { x: -10000 });
+        gsap.from("#card2", { x: -10000, delay: 0.5 });
+        gsap.from("#card3", { x: -10000, delay: 1 });
+        gsap.from("#card4", { x: -10000, delay: 1.5 });
+        gsap.from("#rareCard", { x: -10000, delay: 2 });
+        gsap.from("#card5", { x: -10000, delay: 2 });
 
-        })
     })
+})
 
-  
-    
+
+
 
 
 
@@ -135,12 +135,6 @@ function ButtonEvent(card, value, price) {
     }
 }
 
-function SetTime(time) {
-    document.getElementById("set-time").value = time;
-    console.log(time);
-    ¨console.log("settime")
-}
-
 function HideRareCard() {
 
     document.getElementById("rareCard").style.display = "none";
@@ -152,5 +146,4 @@ function HideRareCard() {
         })
     })
 }
-
 

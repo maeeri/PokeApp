@@ -13,7 +13,13 @@
     var randomLegendary = CardMethods.LegendaryPack();
 
     var legendary = randomLegendary.OrderBy(x => rnd.Next()).Take(1);
+    string blah = "this is a blah string";
+
+    
+
+
 }
+
 <link rel="stylesheet" href="~/css/market.css" />
 <link rel="stylesheet" href="~/css/modal-style.css" />
 
@@ -59,68 +65,72 @@
         </div>
     </div>
 
-    
-        <div class="wrapper">
 
-            <div class="pokepallot">
+    <div class="wrapper">
 
-                <div>
-                    @{ if (User.Identity.IsAuthenticated)
+        <div class="pokepallot">
+
+            <div>
+                @{ if (User.Identity.IsAuthenticated)
+                    {
+                        
+                        if (Model.User.Freeclick.GetValueOrDefault().AddDays(1) < DateTime.Now || Model.User.Freeclick.GetValueOrDefault() == null)
                         {
-                            if (Model.User.Freeclick.GetValueOrDefault().AddDays(1) < DateTime.Now || Model.User.Freeclick.GetValueOrDefault() == null)
-                            {
-                                <button onclick="HideRareCard()" data-modal-target="#modal" class="startpoint" id="raffleButton">
-                                    <img src="~/Images/OrangeBall.png" class="liila" />
-                                </button>
-                            }
-                            else
-                            {
-                                <button onclick="HideRareCard()" data-modal-target="#modal" class="startpoint" id="raffleButton">
-                                    <img src="~/Images/OrangeBall.png" class="liila" />
-                                </button>
-                            }
+                            <button onclick="HideRareCard()" data-modal-target="#modal" class="startpoint" id="raffleButton">
+                                <img src="~/Images/OrangeBall.png" class="liila" />
+                            </button>
                         }
                         else
                         {
-                            <button data-modal-target="#modal" class="startpoint" id="raffleButton">
-                                <img src="~/Images/OrangeBall.png" class="liila" />
-                            </button>
-                            <div class=disabledOverlay id="disabledOverlay">
-                                <div>
-                                    <h1 id="disabledTitle">Looks like you are not signed in! Can't open packs that way!</h1>
-                                    <form method="get" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">
-                                        <button id="disabledSignIn">Sign in</button>>
-                                    </form>
-                                </div>
+                            var time = Model.User.Freeclick.GetValueOrDefault().AddDays(1) - DateTime.Now;
+                            string timeleft = string.Format($"{time.Hours}H {time.Minutes}M").Replace('-',' ');
+                             <button class="startpoint disableForDay" id="raffleButton">
+                                 <p>DISABLED FOR @timeleft</p>
+                              <img src="~/Images/OrangeBall.png" class="NoFreeClick" />
+                             </button>
+                        }
+                    }
+                    else
+                    {
+                        <button class="startpoint" id="raffleButton">
+                            <img src="~/Images/OrangeBall.png" class="liila" />
+                        </button>
+                        <div class=disabledOverlay id="disabledOverlay">
+                            <div>
+                                <h1 id="disabledTitle">Looks like you are not signed in! Can't open packs that way!</h1>
+                                <form method="get" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">
+                                    <button id="disabledSignIn">Sign in</button>>
+                                </form>
                             </div>
+                        </div>
 
-                        } }
+                    } }
 
-                </div>
+            </div>
 
-                <div>
-                    <button onclick="ButtonEvent(this, 1, 10)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
-                        <img src="~/Images/YellowBall.png" class="liila" />
-                    </button>
-                </div>
+            <div>
+                <button onclick="ButtonEvent(this, 1, 10)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
+                    <img src="~/Images/YellowBall.png" class="liila" />
+                </button>
+            </div>
 
-                <div>
-                    <button onclick="ButtonEvent(this, 2, 20)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
-                        <img src="~/Images/BlueBall.png" class="pinkki" />
-                    </button>
-                </div>
+            <div>
+                <button onclick="ButtonEvent(this, 2, 20)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
+                    <img src="~/Images/BlueBall.png" class="pinkki" />
+                </button>
+            </div>
 
-                <div>
-                    <button onclick="ButtonEvent(this, 3, 30)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
-                        <img src="~/Images/OrangeBall.png" class="pinkki" />
-                    </button>
-                </div>
-
+            <div>
+                <button onclick="ButtonEvent(this, 3, 30)" data-modal-target="#modal" class="startpoint rarePakka" id="raffleButton">
+                    <img src="~/Images/OrangeBall.png" class="pinkki" />
+                </button>
             </div>
 
         </div>
 
-<form>
+    </div>
+
+    <form>
 
         <div class="modal rare" id="modal">
             <div class="modal-header">
@@ -241,7 +251,7 @@
             </div>
             <div class="modal-footer">
                 <input id="set-pack" type="hidden" value="" name="pack" />
-                <input class="close-button" type="submit" value="Collect" asp-controller="Db" asp-action="DbSave" asp-route-viewModel="@Model" asp-route-pack="pack"/>
+                <input class="close-button" type="submit" value="Collect" asp-controller="Db" asp-action="DbSave" asp-route-viewModel="@Model" asp-route-pack="pack" />
             </div>
 
         </div>
